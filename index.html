@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>useReducer Counter</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #f5f5f5;
+      }
+
+      .counter-container {
+        text-align: center;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        background-color: #fff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .count-display {
+        font-size: 2rem;
+        margin: 20px 0;
+      }
+
+      .button {
+        margin: 5px;
+        padding: 10px 20px;
+        font-size: 1rem;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+
+      .button.increment {
+        background-color: #4caf50;
+        color: #fff;
+      }
+
+      .button.increment:hover {
+        background-color: #45a049;
+      }
+
+      .button.decrement {
+        background-color: #f44336;
+        color: #fff;
+      }
+
+      .button.decrement:hover {
+        background-color: #e53935;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script src="https://www.unpkg.com/react@18.2.0/umd/react.development.js"></script>
+    <script src="https://www.unpkg.com/react-dom@18.2.0/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel">
+      const { useReducer } = React;
+
+      // Initial state
+      const initialState = { count: 0 };
+
+      // Reducer function to handle actions
+      const reducer = (state, action) => {
+        switch (action.type) {
+          case 'INCREMENT':
+            return { count: state.count + 1 };
+          case 'DECREMENT':
+            return { count: state.count - 1 };
+          default:
+            return state;
+        }
+      };
+
+      function CounterApp() {
+        const [state, dispatch] = useReducer(reducer, initialState);
+
+        return (
+          <div className="counter-container">
+            <h1>useReducer Counter</h1>
+            <div className="count-display">Count: {state.count}</div>
+            <button
+              className="button increment"
+              onClick={() => dispatch({ type: 'INCREMENT' })}
+            >
+              Increment
+            </button>
+            <button
+              className="button decrement"
+              onClick={() => dispatch({ type: 'DECREMENT' })}
+            >
+              Decrement
+            </button>
+          </div>
+        );
+      }
+
+      const root = ReactDOM.createRoot(document.getElementById('root'));
+      root.render(<CounterApp />);
+    </script>
+  </body>
+</html>
